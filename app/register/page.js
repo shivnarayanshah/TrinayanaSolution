@@ -18,6 +18,8 @@ const RegisterSchema = Yup.object().shape({
         .required("Required"),
 });
 
+import Image from "next/image";
+
 export default function RegisterPage() {
     const [status, setStatus] = useState(null);
     const router = useRouter();
@@ -60,15 +62,20 @@ export default function RegisterPage() {
     };
 
     return (
-        <div ref={containerRef} className="relative pt-32 pb-20 bg-creamy-milk min-h-screen flex items-center justify-center">
-            <div className="max-w-md w-full px-6">
+        <div ref={containerRef} className="relative pt-32 pb-20 bg-background min-h-screen flex items-center justify-center overflow-hidden">
+
+            {/* Decorative Blob (Matches Contact Page) */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] -mr-40 -mt-20 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] -ml-40 -mb-20 pointer-events-none" />
+
+            <div className="max-w-md w-full px-6 relative z-10">
                 <div className="text-center mb-12 register-header">
-                    <h1 className="text-sm font-bold uppercase tracking-widest text-accent mb-4">Join Us</h1>
-                    <h2 className="text-4xl font-black text-primary uppercase">Register.</h2>
+                    <h1 className="text-xs font-black uppercase tracking-[0.4em] text-accent mb-4">Join The Future</h1>
+                    <h2 className="text-5xl font-black text-foreground uppercase tracking-tighter drop-shadow-2xl">Register.</h2>
                 </div>
 
-                <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-white/20 relative overflow-hidden register-card">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-3xl -mr-10 -mt-10" />
+                <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-zinc-200 dark:border-zinc-800 relative overflow-hidden register-card">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl -mr-16 -mt-16" />
 
                     <Formik
                         initialValues={{ name: "", email: "", password: "", confirmPassword: "" }}
@@ -78,51 +85,51 @@ export default function RegisterPage() {
                         {({ isSubmitting, errors, touched }) => (
                             <Form className="space-y-4 relative z-10">
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-4">Full Name</label>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 ml-4">Full Name</label>
                                     <Field
                                         name="name"
                                         placeholder="Engineering Lead"
-                                        className={`w-full bg-creamy-milk/50 border-2 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-primary font-medium placeholder:text-primary/20 ${errors.name && touched.name ? "border-red-500/50" : "border-transparent"
+                                        className={`w-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-zinc-900 dark:text-zinc-100 font-bold tracking-wide placeholder:text-zinc-400 dark:placeholder:text-zinc-500 ${errors.name && touched.name ? "border-red-500/50" : ""
                                             }`}
                                     />
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-4">Email Address</label>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 ml-4">Email Address</label>
                                     <Field
                                         name="email"
                                         type="email"
                                         placeholder="your@email.com"
-                                        className={`w-full bg-creamy-milk/50 border-2 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-primary font-medium placeholder:text-primary/20 ${errors.email && touched.email ? "border-red-500/50" : "border-transparent"
+                                        className={`w-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-zinc-900 dark:text-zinc-100 font-bold tracking-wide placeholder:text-zinc-400 dark:placeholder:text-zinc-500 ${errors.email && touched.email ? "border-red-500/50" : ""
                                             }`}
                                     />
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-4">Password</label>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 ml-4">Password</label>
                                     <Field
                                         name="password"
                                         type="password"
                                         placeholder="••••••••"
-                                        className={`w-full bg-creamy-milk/50 border-2 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-primary font-medium placeholder:text-primary/20 ${errors.password && touched.password ? "border-red-500/50" : "border-transparent"
+                                        className={`w-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-zinc-900 dark:text-zinc-100 font-bold tracking-wide placeholder:text-zinc-400 dark:placeholder:text-zinc-500 ${errors.password && touched.password ? "border-red-500/50" : ""
                                             }`}
                                     />
                                 </div>
 
                                 <div className="space-y-1">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 ml-4">Confirm Password</label>
+                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400 ml-4">Confirm Password</label>
                                     <Field
                                         name="confirmPassword"
                                         type="password"
                                         placeholder="••••••••"
-                                        className={`w-full bg-creamy-milk/50 border-2 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-primary font-medium placeholder:text-primary/20 ${errors.confirmPassword && touched.confirmPassword ? "border-red-500/50" : "border-transparent"
+                                        className={`w-full bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-6 py-4 outline-none focus:border-accent transition-all text-zinc-900 dark:text-zinc-100 font-bold tracking-wide placeholder:text-zinc-400 dark:placeholder:text-zinc-500 ${errors.confirmPassword && touched.confirmPassword ? "border-red-500/50" : ""
                                             }`}
                                     />
                                 </div>
 
                                 {status && (
-                                    <div className={`p-4 rounded-xl text-xs font-bold flex items-center gap-2 border ${status.type === "success" ? "bg-green-50 text-green-700 border-green-100" :
-                                        status.type === "error" ? "bg-red-50 text-red-700 border-red-100" : "bg-accent/10 text-primary border-accent/20"
+                                    <div className={`p-4 rounded-xl text-xs font-bold flex items-center gap-2 border ${status.type === "success" ? "bg-green-500/10 text-green-500 border-green-500/20" :
+                                        status.type === "error" ? "bg-red-500/10 text-red-500 border-red-500/20" : "bg-accent/10 text-foreground border-accent/20"
                                         }`}>
                                         {status.type === "success" ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                                         {status.message}
@@ -132,7 +139,7 @@ export default function RegisterPage() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full bg-primary text-creamy-milk py-5 mt-4 rounded-2xl font-black uppercase tracking-[0.2em] text-xs hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3 disabled:opacity-50 shadow-lg shadow-primary/10"
+                                    className="w-full bg-accent text-accent-foreground py-5 mt-4 rounded-2xl font-black uppercase tracking-[0.4em] text-[10px] hover:shadow-[0_20px_40px_rgba(16,185,129,0.4)] hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-50 shadow-xl"
                                 >
                                     {isSubmitting ? "Creating Account..." : "Register"}
                                     <UserPlus size={18} />
@@ -141,7 +148,7 @@ export default function RegisterPage() {
                         )}
                     </Formik>
 
-                    <p className="mt-8 text-center text-xs font-bold text-primary/40 uppercase tracking-widest">
+                    <p className="mt-8 text-center text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">
                         Already have an account?{" "}
                         <Link href="/login" className="text-accent hover:underline decoration-2 underline-offset-4">
                             Login
