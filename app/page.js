@@ -1,12 +1,21 @@
-import React from 'react'
+import SceneWrapper from "@/components/three/SceneWrapper";
+import HeroScene from "@/components/three/HeroScene";
+import HeroContent from "@/components/home/HeroContent";
+import ServicesSection from "@/components/home/ServicesSection";
 
-const Home = () => {
+export default function Home() {
   return (
-    <div className='text-center py-12'>Mugi sabai setting vaisakyo aba
-      <p>Website bandai xa </p>
-      <p>Thank you van dai lai aba</p>
-    </div>
-  )
-}
+    <div className="relative">
+      {/* Hero Section */}
+      <section className="relative h-screen">
+        <SceneWrapper>
+          <HeroScene />
+        </SceneWrapper>
+        <HeroContent />
+      </section>
 
-export default Home
+      {/* Services Section */}
+      <ServicesSection />
+    </div>
+  );
+}
