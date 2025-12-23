@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { LogIn, AlertCircle } from "lucide-react";
+import gsap from "gsap";
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
@@ -16,6 +17,27 @@ const LoginSchema = Yup.object().shape({
 export default function LoginPage() {
     const [error, setError] = useState(null);
     const router = useRouter();
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(".login-card", {
+                y: 60,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power4.out",
+                delay: 0.2
+            });
+            gsap.from(".login-header > *", {
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 1,
+                ease: "power3.out"
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
 
     const handleSubmit = async (values) => {
         setError(null);
@@ -38,14 +60,14 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="relative pt-32 pb-20 bg-creamy-milk min-h-screen flex items-center justify-center">
+        <div ref={containerRef} className="relative pt-32 pb-20 bg-creamy-milk min-h-screen flex items-center justify-center">
             <div className="max-w-md w-full px-6">
-                <div className="text-center mb-12">
+                <div className="text-center mb-12 login-header">
                     <h1 className="text-sm font-bold uppercase tracking-widest text-accent mb-4">Welcome Back</h1>
                     <h2 className="text-4xl font-black text-primary uppercase">Login.</h2>
                 </div>
 
-                <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-white/20 relative overflow-hidden">
+                <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-white/20 relative overflow-hidden login-card">
                     <div className="absolute top-0 left-0 w-24 h-24 bg-accent/5 rounded-full blur-3xl -ml-10 -mt-10" />
 
                     <Formik

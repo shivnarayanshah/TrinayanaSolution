@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "@/app/actions/auth";
 import { UserPlus, AlertCircle, CheckCircle } from "lucide-react";
+import gsap from "gsap";
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string().required("Required"),
@@ -20,6 +21,27 @@ const RegisterSchema = Yup.object().shape({
 export default function RegisterPage() {
     const [status, setStatus] = useState(null);
     const router = useRouter();
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(".register-card", {
+                y: 60,
+                opacity: 0,
+                duration: 1.2,
+                ease: "power4.out",
+                delay: 0.2
+            });
+            gsap.from(".register-header > *", {
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 1,
+                ease: "power3.out"
+            });
+        }, containerRef);
+        return () => ctx.revert();
+    }, []);
 
     const handleSubmit = async (values) => {
         setStatus({ type: "loading", message: "Creating your account..." });
@@ -38,14 +60,14 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="relative pt-32 pb-20 bg-creamy-milk min-h-screen flex items-center justify-center">
+        <div ref={containerRef} className="relative pt-32 pb-20 bg-creamy-milk min-h-screen flex items-center justify-center">
             <div className="max-w-md w-full px-6">
-                <div className="text-center mb-12">
+                <div className="text-center mb-12 register-header">
                     <h1 className="text-sm font-bold uppercase tracking-widest text-accent mb-4">Join Us</h1>
                     <h2 className="text-4xl font-black text-primary uppercase">Register.</h2>
                 </div>
 
-                <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-white/20 relative overflow-hidden">
+                <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl border border-white/20 relative overflow-hidden register-card">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-full blur-3xl -mr-10 -mt-10" />
 
                     <Formik
@@ -100,7 +122,7 @@ export default function RegisterPage() {
 
                                 {status && (
                                     <div className={`p-4 rounded-xl text-xs font-bold flex items-center gap-2 border ${status.type === "success" ? "bg-green-50 text-green-700 border-green-100" :
-                                            status.type === "error" ? "bg-red-50 text-red-700 border-red-100" : "bg-accent/10 text-primary border-accent/20"
+                                        status.type === "error" ? "bg-red-50 text-red-700 border-red-100" : "bg-accent/10 text-primary border-accent/20"
                                         }`}>
                                         {status.type === "success" ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                                         {status.message}
