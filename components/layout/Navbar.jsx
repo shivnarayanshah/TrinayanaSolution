@@ -44,24 +44,24 @@ export default function Navbar() {
             document.body.style.overflow = "hidden";
 
             gsap.to(menuRef.current, {
-                x: 0,
+                y: 0,
                 opacity: 1,
-                duration: 0.6,
-                ease: "power3.out",
+                duration: 0.8,
+                ease: "power4.out",
             });
             gsap.fromTo(
                 ".mobile-link",
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out", delay: 0.2 }
+                { y: -30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power2.out", delay: 0.3 }
             );
         } else {
             document.body.style.overflow = "auto";
 
             gsap.to(menuRef.current, {
-                x: "100%",
+                y: "-100%",
                 opacity: 0,
-                duration: 0.5,
-                ease: "power3.in",
+                duration: 0.6,
+                ease: "power4.in",
             });
         }
 
@@ -80,7 +80,7 @@ export default function Navbar() {
             ref={navRef}
             className="fixed top-0 left-0 w-full z-50 px-4 py-4 md:px-6 md:py-6"
         >
-            <nav className="max-w-7xl mx-auto flex items-center justify-between bg-card/60 dark:bg-card/40 backdrop-blur-3xl border border-border rounded-3xl md:rounded-[2.5rem] px-5 py-3 md:px-10 md:py-5 shadow-2xl">
+            <nav className="max-w-7xl mx-auto flex items-center justify-between bg-card/60 dark:bg-card/40 backdrop-blur-3xl border border-border rounded-3xl md:rounded-[2.5rem] px-5 py-3 md:px-10 md:py-5 shadow-2xl relative z-50">
                 {/* Logo */}
                 <Link href="/" ref={logoRef} className="text-xl md:text-3xl font-black tracking-tighter text-foreground group flex items-center gap-2">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-accent rounded-lg md:rounded-xl flex items-center justify-center text-accent-foreground text-lg md:text-xl shadow-[0_0_20px_rgba(16,185,129,0.4)]">T</div>
@@ -127,32 +127,29 @@ export default function Navbar() {
             {/* Mobile Menu */}
             <div
                 ref={menuRef}
-                className="fixed inset-0 bg-background z-40 flex flex-col items-center justify-center space-y-8 md:hidden translate-x-full opacity-0 pointer-events-none data-[open=true]:pointer-events-auto transition-colors duration-500"
+                className="fixed inset-0 bg-background/95 backdrop-blur-3xl z-40 flex flex-col items-center justify-center space-y-8 md:hidden -translate-y-full opacity-0 pointer-events-none data-[open=true]:pointer-events-auto transition-colors duration-500"
                 data-open={isOpen}
             >
-                <div className="absolute top-8 right-8 mobile-link">
-                    <ThemeToggle />
-                </div>
-
                 {navLinks.map((link) => (
                     <Link
                         key={link.name}
                         href={link.href}
-                        className="mobile-link text-4xl font-black text-foreground hover:text-accent transition-all uppercase tracking-tighter text-center"
+                        className="mobile-link text-3xl font-black text-foreground hover:text-accent transition-all uppercase tracking-tighter text-center"
                     >
                         {link.name}
                     </Link>
                 ))}
-                <div className="pt-8 mobile-link flex flex-col items-center gap-6">
+
+                <div className="pt-8 mobile-link flex flex-col items-center gap-6 w-full px-12">
+                    <div className="w-full flex justify-center">
+                        <ThemeToggle />
+                    </div>
                     <Link
                         href="/login"
-                        className="px-12 py-5 bg-accent text-accent-foreground rounded-2xl text-xs font-black uppercase tracking-[0.3em] shadow-[0_0_40px_rgba(16,185,129,0.6)]"
+                        className="w-full text-center px-12 py-5 bg-accent text-accent-foreground rounded-2xl text-xs font-black uppercase tracking-[0.3em] shadow-[0_0_40px_rgba(16,185,129,0.6)]"
                     >
                         Dashboard
                     </Link>
-                    <div className="md:hidden">
-                        {/* Empty spacer for aesthetic balance if needed */}
-                    </div>
                 </div>
             </div>
         </header>
